@@ -1,6 +1,7 @@
 package com.example.android.aficion;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,14 +13,14 @@ import android.widget.TextView;
  */
 
 public class ScoresAdapter extends RecyclerView.Adapter<ScoresAdapter.ScoreViewHolder>{
-    private String[] mScoresData;
+    private Cursor mScoresData;
     private int mNumberOfItems;
 
     public ScoresAdapter(){}
 
-    public void setScoresCursor(String[] scoresData){
+    public void setScoresCursor(Cursor scoresData){
         mScoresData = scoresData;
-        mNumberOfItems = mScoresData.length;
+        mNumberOfItems = mScoresData.getCount();
         notifyDataSetChanged();
     }
 
@@ -51,7 +52,9 @@ public class ScoresAdapter extends RecyclerView.Adapter<ScoresAdapter.ScoreViewH
             GameTextView = itemView.findViewById(R.id.score_game_text_view);
         }
         void bind(int itemIndex){
-            GameTextView.setText(mScoresData[itemIndex]);
+            mScoresData.moveToPosition(itemIndex);
+            String game = mScoresData.getString(0) + " vs " + mScoresData.getString(1);
+            GameTextView.setText(game);
         }
     }
 }

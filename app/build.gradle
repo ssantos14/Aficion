@@ -38,5 +38,7 @@ dependencies {
     compile('com.google.apis:google-api-services-youtube:v3-rev193-1.23.0') {
         exclude group: 'org.apache.httpcomponents'
     }
+    annotationProcessor 'net.simonvt.schematic:schematic-compiler:0.6.3'
+    compile 'net.simonvt.schematic:schematic:0.6.3'
 }
 

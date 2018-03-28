@@ -1,0 +1,52 @@
+package com.example.android.aficion.sync;
+
+import android.content.ContentResolver;
+import android.content.ContentValues;
+import android.content.Context;
+import android.util.Log;
+
+import com.example.android.aficion.data.AficionProvider;
+import com.example.android.aficion.data.NewsColumns;
+import com.example.android.aficion.utils.NetworkUtils;
+import com.example.android.aficion.utils.OpenJsonUtils;
+import com.example.android.aficion.utils.YoutubeDataUtils;
+import com.google.api.services.youtube.model.SearchResult;
+
+import java.net.URL;
+import java.util.List;
+
+/**
+ * Created by Sylvana on 3/27/2018.
+ */
+
+public class SyncDataTask {
+
+    synchronized public static void syncData(Context context){
+        try{
+            ContentResolver contentResolver = context.getContentResolver();
+            URL newsUrl = NetworkUtils.buildNewsUrl();
+            String jsonNewsResponse = NetworkUtils.getResponseFromUrl(newsUrl);
+            ContentValues[] newsData = OpenJsonUtils.getNewsFromJson(jsonNewsResponse);
+            if(newsData != null && newsData.length != 0){
+                contentResolver.delete(AficionProvider.News.NEWS_CONTENT_URI, null,null);
+                contentResolver.bulkInsert(AficionProvider.News.NEWS_CONTENT_URI,newsData);
+            }
+            URL scoresURL = NetworkUtils.buildScoresUrl();
+            String jsonScoresResponse = NetworkUtils.getResponseFromScoresUrl(scoresURL);
+            ContentValues[] scoresData = OpenJsonUtils.getScoresFromJson(jsonScoresResponse);
+            if(scoresData != null && scoresData.length != 0){
+                contentResolver.delete(AficionProvider.Scores.SCORES_CONTENT_URI,null,null);
+                contentResolver.bulkInsert(AficionProvider.Scores.SCORES_CONTENT_URI,scoresData);
+            }
+            List<SearchResult> highlightVideosResponse = YoutubeDataUtils.getHighlightsInfo(context);
+            ContentValues[] highlightsData = YoutubeDataUtils.getContentValuesFromSearchResults(highlightVideosResponse);
+            if(highlightsData != null && highlightsData.length != 0){
+                contentResolver.delete(AficionProvider.Highlights.HIGHLIGHTS_CONTENT_URI,null,null);
+                contentResolver.bulkInsert(AficionProvider.Highlights.HIGHLIGHTS_CONTENT_URI,highlightsData);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+}

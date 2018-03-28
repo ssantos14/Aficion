@@ -1,11 +1,13 @@
 package com.example.android.aficion;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 
 /**
  * Created by Sylvana on 3/25/2018.
@@ -13,13 +15,13 @@ import android.widget.TextView;
 
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ArticleViewHolder> {
     private int mNumberOfNewsArticles;
-    private String[] mNewsData;
+    private Cursor mNewsData;
 
     public NewsAdapter(){}
 
-    public void setNewsCursor(String[] newsCursor){
+    public void setNewsCursor(Cursor newsCursor){
         mNewsData = newsCursor;
-        mNumberOfNewsArticles = mNewsData.length;
+        mNumberOfNewsArticles = mNewsData.getCount();
         notifyDataSetChanged();
     }
 
@@ -52,7 +54,9 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ArticleViewHol
             ArticleTitleTextView = itemView.findViewById(R.id.news_item_title);
         }
         void bind(int articleIndex){
-            ArticleTitleTextView.setText(mNewsData[articleIndex]);
+            mNewsData.moveToPosition(articleIndex);
+            String title = mNewsData.getString(0);
+            ArticleTitleTextView.setText(title);
         }
     }
 

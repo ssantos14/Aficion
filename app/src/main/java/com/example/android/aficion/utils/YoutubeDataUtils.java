@@ -1,10 +1,13 @@
 package com.example.android.aficion.utils;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 import android.util.Log;
 
+import com.example.android.aficion.data.AficionProvider;
+import com.example.android.aficion.data.HighlightsColumns;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.googleapis.json.GoogleJsonResponseException;
 import com.google.api.client.http.HttpRequest;
@@ -78,15 +81,20 @@ public class YoutubeDataUtils {
         return null;
     }
 
-    public static String[] convertSearchResultsToArray(List<SearchResult> highlightsResults){
+    public static ContentValues[] getContentValuesFromSearchResults(List<SearchResult> highlightsResults){
         int numberOfVideos = highlightsResults.size();
-        String[] videosInfo = new String[numberOfVideos];
+        ContentValues[] videosInfo = new ContentValues[numberOfVideos];
         for(int i=0; i<numberOfVideos; i++){
             SearchResult video = highlightsResults.get(i);
             String videoTitle = video.getSnippet().getTitle();
             String videoThumbnail = video.getSnippet().getThumbnails().getDefault().getUrl();
             String videoId = video.getId().getVideoId();
-            videosInfo[i]= videoTitle;
+
+            ContentValues videoContentValues = new ContentValues();
+            videoContentValues.put(HighlightsColumns.VIDEO_TITLE,videoTitle);
+            videoContentValues.put(HighlightsColumns.VIDEO_ID,videoId);
+            videoContentValues.put(HighlightsColumns.THUMBNAIL_URL,videoThumbnail);
+            videosInfo[i] = videoContentValues;
         }
         return videosInfo;
     }

@@ -1,6 +1,10 @@
 package com.example.android.aficion.utils;
 
+import android.content.ContentValues;
 import android.content.Context;
+
+import com.example.android.aficion.data.NewsColumns;
+import com.example.android.aficion.data.ScoresColumns;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -12,8 +16,8 @@ import org.json.JSONObject;
 
 public class OpenJsonUtils {
 
-    public static String[] getNewsFromJson(String newsJson) throws JSONException{
-        String[] newsData;
+    public static ContentValues[] getNewsFromJson(String newsJson) throws JSONException{
+        ContentValues[] newsData;
         String articleTitle;
         String articleUrl;
         String articleImageUrl;
@@ -21,20 +25,24 @@ public class OpenJsonUtils {
         JSONObject response = new JSONObject(newsJson);
         JSONArray articles = response.getJSONArray("articles");
         int numberOfArticles = articles.length();
-        newsData = new String[numberOfArticles];
+        newsData = new ContentValues[numberOfArticles];
         for(int i=0; i < numberOfArticles; i++){
             JSONObject article = articles.getJSONObject(i);
             articleTitle = article.getString("title");
-            //articleUrl = article.getString("url");
-            //articleImageUrl = article.getString("urlToImage");
-            //newsData[i] = articleTitle + articleUrl + articleImageUrl;
-            newsData[i] = articleTitle;
+            articleUrl = article.getString("url");
+            articleImageUrl = article.getString("urlToImage");
+
+            ContentValues articleContentValues = new ContentValues();
+            articleContentValues.put(NewsColumns.TITLE,articleTitle);
+            articleContentValues.put(NewsColumns.ARTICLE_URL,articleUrl);
+            articleContentValues.put(NewsColumns.IMAGE_URL,articleImageUrl);
+            newsData[i] = articleContentValues;
         }
         return newsData;
     }
 
-    public static String[] getScoresFromJson(String scoresJson) throws JSONException{
-        String[] scoresData;
+    public static ContentValues[] getScoresFromJson(String scoresJson) throws JSONException{
+        ContentValues[] scoresData;
         String awayTeam;
         String homeTeam;
         String awayTeamGoals;
@@ -42,14 +50,20 @@ public class OpenJsonUtils {
 
         JSONArray games = new JSONArray(scoresJson);
         int numberOfGames = games.length();
-        scoresData = new String[numberOfGames];
+        scoresData = new ContentValues[numberOfGames];
         for(int i=0; i < numberOfGames; i++){
             JSONObject game = games.getJSONObject(i);
             awayTeam = game.getString("AwayTeamName");
             homeTeam = game.getString("HomeTeamName");
             awayTeamGoals = game.getString("AwayTeamScore");
             homeTeamGoals = game.getString("HomeTeamScore");
-            scoresData[i] = awayTeam + " vs " + homeTeam;
+
+            ContentValues gameContentValues = new ContentValues();
+            gameContentValues.put(ScoresColumns.AWAY_TEAM,awayTeam);
+            gameContentValues.put(ScoresColumns.HOME_TEAM,homeTeam);
+            gameContentValues.put(ScoresColumns.AWAY_TEAM_GOALS,awayTeamGoals);
+            gameContentValues.put(ScoresColumns.HOME_TEAM_GOALS,homeTeamGoals);
+            scoresData[i] = gameContentValues;
         }
         return scoresData;
     }

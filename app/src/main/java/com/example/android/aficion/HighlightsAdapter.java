@@ -1,6 +1,7 @@
 package com.example.android.aficion;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,14 +13,14 @@ import android.widget.TextView;
  */
 
 public class HighlightsAdapter extends RecyclerView.Adapter<HighlightsAdapter.HighlightsViewHolder>{
-    private String[] mHighlightsData;
+    private Cursor mHighlightsData;
     private int mNumberOfItems;
 
     public HighlightsAdapter(){}
 
-    public void setHighlightsCursor(String[] highlightsData){
+    public void setHighlightsCursor(Cursor highlightsData){
         mHighlightsData = highlightsData;
-        mNumberOfItems = mHighlightsData.length;
+        mNumberOfItems = mHighlightsData.getCount();
         notifyDataSetChanged();
     }
 
@@ -52,7 +53,9 @@ public class HighlightsAdapter extends RecyclerView.Adapter<HighlightsAdapter.Hi
             highlightsTitleTextView = itemView.findViewById(R.id.highlights_title_text_view);
         }
         void bind(int itemIndex){
-            highlightsTitleTextView.setText(mHighlightsData[itemIndex]);
+            mHighlightsData.moveToPosition(itemIndex);
+            String title = mHighlightsData.getString(0);
+            highlightsTitleTextView.setText(title);
         }
     }
 }
