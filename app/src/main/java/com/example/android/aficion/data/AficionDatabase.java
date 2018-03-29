@@ -10,10 +10,11 @@ import net.simonvt.schematic.annotation.Table;
 @Database(version = AficionDatabase.VERSION)
 public final class AficionDatabase {
 
-    public static final int VERSION = 2;
+    public static final int VERSION = 3;
 
     @Table(NewsColumns.class) public static final String NEWS = "news";
     @Table (ScoresColumns.class) public static final String SCORES = "scores";
     @Table(HighlightsColumns.class) public static final String HIGHLIGHTS = "highlights";
+    @Table (TeamsColumns.class) public static final String TEAMS = "teams";
 
 }

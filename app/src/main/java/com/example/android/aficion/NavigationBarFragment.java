@@ -41,6 +41,13 @@ public class NavigationBarFragment extends Fragment {
                 mCallback.onFeedSelected(R.id.navigation_highlights);
             }
         });
+        ImageButton followingButton = rootView.findViewById(R.id.navigation_following);
+        followingButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mCallback.onFeedSelected(R.id.navigation_following);
+            }
+        });
         return rootView;
     }
 
@@ -50,7 +57,7 @@ public class NavigationBarFragment extends Fragment {
         try{
             mCallback = (OnFeedClickListener) context;
         }catch(ClassCastException e){
-            throw new ClassCastException(context.toString() + " must implement the OnNewsFeedClickListener");
+            throw new ClassCastException(context.toString() + " must implement the OnFeedClickListener");
         }
     }
 

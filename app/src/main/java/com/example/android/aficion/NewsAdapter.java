@@ -6,7 +6,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 
 /**
@@ -49,13 +52,17 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ArticleViewHol
 
     class ArticleViewHolder extends RecyclerView.ViewHolder{
         TextView ArticleTitleTextView;
+        ImageView ArticleImageView;
         public ArticleViewHolder(View itemView){
             super(itemView);
             ArticleTitleTextView = itemView.findViewById(R.id.news_item_title);
+            ArticleImageView = itemView.findViewById(R.id.news_item_image);
         }
         void bind(int articleIndex){
             mNewsData.moveToPosition(articleIndex);
             String title = mNewsData.getString(0);
+            String imageUrl = mNewsData.getString(1);
+            Picasso.with(ArticleImageView.getContext()).load(imageUrl).into(ArticleImageView);
             ArticleTitleTextView.setText(title);
         }
     }

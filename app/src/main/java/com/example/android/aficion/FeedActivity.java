@@ -1,7 +1,9 @@
 package com.example.android.aficion;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.preference.PreferenceManager;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -13,7 +15,7 @@ import com.example.android.aficion.sync.SyncDataIntentService;
 
 
 public class FeedActivity extends AppCompatActivity implements NavigationBarFragment.OnFeedClickListener,
-        LoaderManager.LoaderCallbacks<Cursor>{
+        LoaderManager.LoaderCallbacks<Cursor>,SharedPreferences.OnSharedPreferenceChangeListener{
     private static final int NEWS_LOADER_ID = 12;
     private static final int SCORES_LOADER_ID = 99;
     private static final int HIGHLIGHTS_LOADER_ID = 47;
@@ -22,6 +24,8 @@ public class FeedActivity extends AppCompatActivity implements NavigationBarFrag
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feed);
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        sharedPreferences.registerOnSharedPreferenceChangeListener(this);
         Intent intentToSync = new Intent(this, SyncDataIntentService.class);
         startService(intentToSync);
         NewsFeedFragment newsFeedFragment = new NewsFeedFragment();
@@ -49,6 +53,9 @@ public class FeedActivity extends AppCompatActivity implements NavigationBarFrag
                 getSupportFragmentManager().beginTransaction().replace(R.id.feed_container,highlightsFeedFragment).commit();
                 getSupportLoaderManager().restartLoader(HIGHLIGHTS_LOADER_ID,null,this);
                 break;
+            case R.id.navigation_following:
+                TeamsFollowingFragment followingFragment = new TeamsFollowingFragment();
+                getSupportFragmentManager().beginTransaction().replace(R.id.feed_container,followingFragment).commit();
             default:
                 break;
         }
@@ -102,5 +109,19 @@ public class FeedActivity extends AppCompatActivity implements NavigationBarFrag
             default:
                 break;
         }
+    }
+
+
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
+        Intent intentToSync = new Intent(this, SyncDataIntentService.class);
+        startService(intentToSync);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        PreferenceManager.getDefaultSharedPreferences(this).unregisterOnSharedPreferenceChangeListener(this);
     }
 }

@@ -45,4 +45,14 @@ public final class AficionProvider {
         public static final Uri HIGHLIGHTS_CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/highlights");
     }
 
+    @TableEndpoint(table = AficionDatabase.TEAMS) public static class Teams{
+
+        @ContentUri(
+                path = "teams",
+                type = "vnd.android.cursor.dir/team",
+                defaultSort = TeamsColumns.ID + " ASC"
+        )
+        public static final Uri TEAMS_CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/teams");
+    }
+
 }

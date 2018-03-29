@@ -46,15 +46,19 @@ public class ScoresAdapter extends RecyclerView.Adapter<ScoresAdapter.ScoreViewH
     }
 
     class ScoreViewHolder extends RecyclerView.ViewHolder{
-        TextView GameTextView;
+        TextView GameTeamsTextView;
+        TextView GameScoreTextView;
         public ScoreViewHolder(View itemView){
             super(itemView);
-            GameTextView = itemView.findViewById(R.id.score_game_text_view);
+            GameTeamsTextView = itemView.findViewById(R.id.game_teams_text_view);
+            GameScoreTextView = itemView.findViewById(R.id.game_score_text_view);
         }
         void bind(int itemIndex){
             mScoresData.moveToPosition(itemIndex);
-            String game = mScoresData.getString(0) + " vs " + mScoresData.getString(1);
-            GameTextView.setText(game);
+            String teams = mScoresData.getString(0) + " vs " + mScoresData.getString(1);
+            String score = mScoresData.getString(2) + " - " + mScoresData.getString(3);
+            GameTeamsTextView.setText(teams);
+            GameScoreTextView.setText(score);
         }
     }
 }

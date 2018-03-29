@@ -6,7 +6,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 /**
  * Created by Sylvana on 3/26/2018.
@@ -47,15 +50,19 @@ public class HighlightsAdapter extends RecyclerView.Adapter<HighlightsAdapter.Hi
 
 
     class HighlightsViewHolder extends RecyclerView.ViewHolder{
-        TextView highlightsTitleTextView;
+        TextView videoTitleTextView;
+        ImageView videoThumbnail;
         public HighlightsViewHolder(View itemView){
             super(itemView);
-            highlightsTitleTextView = itemView.findViewById(R.id.highlights_title_text_view);
+            videoTitleTextView = itemView.findViewById(R.id.video_title_text_view);
+            videoThumbnail = itemView.findViewById(R.id.video_thumbnail);
         }
         void bind(int itemIndex){
             mHighlightsData.moveToPosition(itemIndex);
             String title = mHighlightsData.getString(0);
-            highlightsTitleTextView.setText(title);
+            String thumbnailUrl = mHighlightsData.getString(2);
+            Picasso.with(videoThumbnail.getContext()).load(thumbnailUrl).into(videoThumbnail);
+            videoTitleTextView.setText(title);
         }
     }
 }
