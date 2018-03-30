@@ -8,6 +8,9 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
@@ -19,12 +22,16 @@ public class NetworkUtils {
 
     private static final String NEWS_BASE_URL = "https://newsapi.org/v2/everything?";
     private static final String SCORES_BASE_URL = "https://api.fantasydata.net/v3/soccer/scores";
+    private static final String TEAMS_BASE_URL = "https://api.fantasydata.net/v3/soccer/scores/json/Teams";
 
     public static URL buildNewsUrl(){
         Uri builtUri = Uri.parse(NEWS_BASE_URL).buildUpon()
-                .appendQueryParameter("q", "messi")
-                .appendQueryParameter("from","2018-03-27")
-                .appendQueryParameter("sortBy","popularity")
+                .appendQueryParameter("pageSize","100")
+                .appendQueryParameter("sortBy","publishedAt")
+                .appendQueryParameter("language","en")
+                //from start of season
+                //.appendQueryParameter("domains","espnfc.com")
+                .appendQueryParameter("q","1.FC Koln NOT live")
                 .appendQueryParameter("apiKey","c9e9020b9f7f44ec9f2f61b5cfbf3763")
                 .build();
         URL url = null;
@@ -42,6 +49,17 @@ public class NetworkUtils {
                 .appendPath("GamesByDate")
                 .appendPath("2018-03-14")
                 .build();
+        URL url = null;
+        try{
+            url = new URL(builtUri.toString());
+        }catch (MalformedURLException e){
+            e.printStackTrace();
+        }
+        return url;
+    }
+
+    public static URL buildTeamsUrl(){
+        Uri builtUri = Uri.parse(TEAMS_BASE_URL).buildUpon().build();
         URL url = null;
         try{
             url = new URL(builtUri.toString());
@@ -70,7 +88,7 @@ public class NetworkUtils {
         }
     }
 
-    public static String getResponseFromScoresUrl(URL url) throws IOException {
+    public static String getResponseFromFantasyDataUrl(URL url) throws IOException {
         HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
         try {
             urlConnection.setRequestProperty("Ocp-Apim-Subscription-Key","53ec4afb9f6b41d79f6ee6395e8714d3");

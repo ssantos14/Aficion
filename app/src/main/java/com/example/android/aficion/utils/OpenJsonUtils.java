@@ -5,6 +5,7 @@ import android.content.Context;
 
 import com.example.android.aficion.data.NewsColumns;
 import com.example.android.aficion.data.ScoresColumns;
+import com.example.android.aficion.data.TeamsColumns;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -66,5 +67,35 @@ public class OpenJsonUtils {
             scoresData[i] = gameContentValues;
         }
         return scoresData;
+    }
+
+    public static ContentValues[] getTeamsFromJson(String teamsJson) throws JSONException{
+        ContentValues[] teamsData;
+        String teamName;
+        String teamId;
+        String teamLogoUrl;
+        String teamAreaId;
+        String teamType;
+
+        JSONArray teams = new JSONArray(teamsJson);
+        int numberOfTeams = teams.length();
+        teamsData = new ContentValues[numberOfTeams];
+        for(int i=0; i < numberOfTeams; i++){
+            JSONObject team = teams.getJSONObject(i);
+            teamName = team.getString("Name");
+            teamId = team.getString("TeamId");
+            teamLogoUrl = team.getString("WikipediaLogoUrl");
+            teamAreaId = team.getString("AreaId");
+            teamType = team.getString("Type");
+
+            ContentValues teamContentValues = new ContentValues();
+            teamContentValues.put(TeamsColumns.NAME,teamName);
+            teamContentValues.put(TeamsColumns.ID,teamId);
+            teamContentValues.put(TeamsColumns.LOGO_URL,teamLogoUrl);
+            teamContentValues.put(TeamsColumns.AREA_ID,teamAreaId);
+            teamContentValues.put(TeamsColumns.TYPE,teamType);
+            teamsData[i] = teamContentValues;
+        }
+        return teamsData;
     }
 }

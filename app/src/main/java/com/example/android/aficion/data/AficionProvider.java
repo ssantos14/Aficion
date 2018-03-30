@@ -50,7 +50,7 @@ public final class AficionProvider {
         @ContentUri(
                 path = "teams",
                 type = "vnd.android.cursor.dir/team",
-                defaultSort = TeamsColumns.ID + " ASC"
+                defaultSort = TeamsColumns.NAME + " ASC"
         )
         public static final Uri TEAMS_CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/teams");
     }

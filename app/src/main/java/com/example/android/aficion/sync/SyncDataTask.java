@@ -32,7 +32,7 @@ public class SyncDataTask {
                 contentResolver.bulkInsert(AficionProvider.News.NEWS_CONTENT_URI,newsData);
             }
             URL scoresURL = NetworkUtils.buildScoresUrl();
-            String jsonScoresResponse = NetworkUtils.getResponseFromScoresUrl(scoresURL);
+            String jsonScoresResponse = NetworkUtils.getResponseFromFantasyDataUrl(scoresURL);
             ContentValues[] scoresData = OpenJsonUtils.getScoresFromJson(jsonScoresResponse);
             if(scoresData != null && scoresData.length != 0){
                 contentResolver.delete(AficionProvider.Scores.SCORES_CONTENT_URI,null,null);
@@ -43,6 +43,13 @@ public class SyncDataTask {
             if(highlightsData != null && highlightsData.length != 0){
                 contentResolver.delete(AficionProvider.Highlights.HIGHLIGHTS_CONTENT_URI,null,null);
                 contentResolver.bulkInsert(AficionProvider.Highlights.HIGHLIGHTS_CONTENT_URI,highlightsData);
+            }
+            URL teamsURL = NetworkUtils.buildTeamsUrl();
+            String jsonTeamsResponse = NetworkUtils.getResponseFromFantasyDataUrl(teamsURL);
+            ContentValues[] teamsData = OpenJsonUtils.getTeamsFromJson(jsonTeamsResponse);
+            if(teamsData != null && teamsData.length != 0){
+                contentResolver.delete(AficionProvider.Teams.TEAMS_CONTENT_URI,null,null);
+                contentResolver.bulkInsert(AficionProvider.Teams.TEAMS_CONTENT_URI,teamsData);
             }
         }catch (Exception e){
             e.printStackTrace();

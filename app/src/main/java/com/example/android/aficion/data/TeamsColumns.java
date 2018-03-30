@@ -13,4 +13,6 @@ public interface TeamsColumns {
     @DataType(TEXT) @NotNull String NAME = "name";
     @DataType(TEXT) @NotNull String ID = "id";
     @DataType(TEXT) @NotNull String LOGO_URL = "url";
+    @DataType(TEXT) @NotNull String AREA_ID = "area_id";
+    @DataType(TEXT) @NotNull String TYPE = "type";
 }
