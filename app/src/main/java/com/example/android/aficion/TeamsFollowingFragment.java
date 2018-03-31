@@ -12,6 +12,7 @@ import android.support.v7.preference.PreferenceScreen;
 import com.example.android.aficion.data.AficionProvider;
 import com.example.android.aficion.data.TeamsColumns;
 
+
 public class TeamsFollowingFragment extends PreferenceFragmentCompat implements LoaderManager.LoaderCallbacks<Cursor>{
     int TEAMS_LOADER_ID = 43;
 
@@ -48,4 +49,5 @@ public class TeamsFollowingFragment extends PreferenceFragmentCompat implements 
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {}
+
 }

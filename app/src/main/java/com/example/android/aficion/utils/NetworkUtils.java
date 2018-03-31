@@ -1,6 +1,5 @@
 package com.example.android.aficion.utils;
 
-import android.content.SharedPreferences;
 import android.net.Uri;
 
 import java.io.IOException;
@@ -8,10 +7,6 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -24,16 +19,21 @@ public class NetworkUtils {
     private static final String SCORES_BASE_URL = "https://api.fantasydata.net/v3/soccer/scores";
     private static final String TEAMS_BASE_URL = "https://api.fantasydata.net/v3/soccer/scores/json/Teams";
 
-    public static URL buildNewsUrl(){
-        Uri builtUri = Uri.parse(NEWS_BASE_URL).buildUpon()
+    public static URL buildNewsUrl(String qParameter){
+        qParameter = qParameter + " NOT live";
+        Uri.Builder uriBuilder = Uri.parse(NEWS_BASE_URL).buildUpon()
                 .appendQueryParameter("pageSize","100")
                 .appendQueryParameter("sortBy","publishedAt")
                 .appendQueryParameter("language","en")
-                //from start of season
-                //.appendQueryParameter("domains","espnfc.com")
-                .appendQueryParameter("q","1.FC Koln NOT live")
-                .appendQueryParameter("apiKey","c9e9020b9f7f44ec9f2f61b5cfbf3763")
-                .build();
+//                .appendQueryParameter("domains","espnfc.com")
+                .appendQueryParameter("apiKey","c9e9020b9f7f44ec9f2f61b5cfbf3763");
+        if(qParameter == null){
+            uriBuilder.appendQueryParameter("q","FC Barcelona OR Real Madrid OR FC Bayern Munich " +
+                    "OR Paris Saint-Germain OR Manchester City FC OR Juventus NOT live");
+        }else {
+            uriBuilder.appendQueryParameter("q",qParameter);
+        }
+        Uri builtUri = uriBuilder.build();
         URL url = null;
         try{
             url = new URL(builtUri.toString());

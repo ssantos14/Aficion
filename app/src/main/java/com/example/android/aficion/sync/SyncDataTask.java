@@ -21,10 +21,12 @@ import java.util.List;
 
 public class SyncDataTask {
 
-    synchronized public static void syncData(Context context){
+    synchronized public static void syncData(Context context, String teamsFollowing){
         try{
             ContentResolver contentResolver = context.getContentResolver();
-            URL newsUrl = NetworkUtils.buildNewsUrl();
+            //input string array with true preferences
+            URL newsUrl = NetworkUtils.buildNewsUrl(teamsFollowing);
+            Log.d(SyncDataTask.class.getSimpleName(),"just built news url" + newsUrl);
             String jsonNewsResponse = NetworkUtils.getResponseFromUrl(newsUrl);
             ContentValues[] newsData = OpenJsonUtils.getNewsFromJson(jsonNewsResponse);
             if(newsData != null && newsData.length != 0){
