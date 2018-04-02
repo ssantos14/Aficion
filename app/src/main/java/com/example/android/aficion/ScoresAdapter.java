@@ -3,6 +3,7 @@ package com.example.android.aficion;
 import android.content.Context;
 import android.database.Cursor;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,8 +56,18 @@ public class ScoresAdapter extends RecyclerView.Adapter<ScoresAdapter.ScoreViewH
         }
         void bind(int itemIndex){
             mScoresData.moveToPosition(itemIndex);
-            String teams = mScoresData.getString(0) + " vs " + mScoresData.getString(1);
-            String score = mScoresData.getString(2) + " - " + mScoresData.getString(3);
+            String team1 = mScoresData.getString(0);
+            String team2 = mScoresData.getString(1);
+            String team1Goals = mScoresData.getString(2);
+            String team2Goals = mScoresData.getString(3);
+            if(team1Goals.equals("null")){
+                team1Goals = "0";
+            }
+            if(team2Goals.equals("null")){
+                team2Goals = "0";
+            }
+            String teams = team1 + " vs " + team2;
+            String score = team1Goals + " - " + team2Goals;
             GameTeamsTextView.setText(teams);
             GameScoreTextView.setText(score);
         }

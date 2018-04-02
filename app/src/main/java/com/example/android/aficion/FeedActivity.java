@@ -10,8 +10,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.preference.PreferenceManager;
 import android.util.Log;
+import android.view.View;
 
 import com.example.android.aficion.data.AficionProvider;
+import com.example.android.aficion.data.ScoresColumns;
 import com.example.android.aficion.sync.SyncDataIntentService;
 
 import java.util.ArrayList;
@@ -75,7 +77,9 @@ public class FeedActivity extends AppCompatActivity implements NavigationBarFrag
             case NEWS_LOADER_ID:
                 return new CursorLoader(this, AficionProvider.News.NEWS_CONTENT_URI, null, null, null, null);
             case SCORES_LOADER_ID:
-                return new CursorLoader(this,AficionProvider.Scores.SCORES_CONTENT_URI,null,null,null,null);
+                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+                String selection = getCursorSelection(sharedPreferences);
+                return new CursorLoader(this,AficionProvider.Scores.SCORES_CONTENT_URI,null,selection,null,null);
             case HIGHLIGHTS_LOADER_ID:
                 return new CursorLoader(this,AficionProvider.Highlights.HIGHLIGHTS_CONTENT_URI,null,null,null,null);
             default:
@@ -91,7 +95,11 @@ public class FeedActivity extends AppCompatActivity implements NavigationBarFrag
                 NewsFeedFragment.mNewsAdapter.setNewsCursor(data);
                 break;
             case SCORES_LOADER_ID:
-                ScoresFeedFragment.mScoresAdapter.setScoresCursor(data);
+                if(data != null && data.getCount() > 0){
+                    ScoresFeedFragment.mScoresAdapter.setScoresCursor(data);
+                }else{
+                    ScoresFeedFragment.mMessageTextView.setVisibility(View.VISIBLE);
+                }
                 break;
             case HIGHLIGHTS_LOADER_ID:
                 HighlightsFeedFragment.mHighlightsAdapter.setHighlightsCursor(data);
@@ -147,6 +155,8 @@ public class FeedActivity extends AppCompatActivity implements NavigationBarFrag
                 queryParameter = queryParameter + teams[i];
                 if(i < teams.length-1){
                     queryParameter = queryParameter + " OR ";
+                }else{
+                    queryParameter = queryParameter + " NOT live";
                 }
             }
             Log.d(FeedActivity.class.getSimpleName(),"QUERY PARAMETER BUILT: " + queryParameter);
@@ -154,5 +164,30 @@ public class FeedActivity extends AppCompatActivity implements NavigationBarFrag
             queryParameter = null;
         }
         return queryParameter;
+    }
+
+    private String getCursorSelection(SharedPreferences sharedPreferences){
+        Map<String,?> prefs = sharedPreferences.getAll();
+        List<String> teamsFollowing = new ArrayList<String>();
+        for (Map.Entry<String, ?> entry : prefs.entrySet()) {
+            if(entry.getValue().toString() == "true"){
+                teamsFollowing.add(entry.getKey());
+            }
+        }
+        String selection = "";
+        if(teamsFollowing.size() > 0){
+            Object[] teams = teamsFollowing.toArray();
+            for(int i =0; i<teams.length; i++){
+                selection = selection + ScoresColumns.HOME_TEAM + "='" + teams[i] + "'"
+                        +  " OR " + ScoresColumns.AWAY_TEAM + "='" + teams[i] + "'";
+                if(i < teams.length-1){
+                    selection = selection + " OR ";
+                }
+            }
+            Log.d(FeedActivity.class.getSimpleName(),"QUERY PARAMETER BUILT: " + selection);
+        }else{
+            selection = null;
+        }
+        return selection;
     }
 }

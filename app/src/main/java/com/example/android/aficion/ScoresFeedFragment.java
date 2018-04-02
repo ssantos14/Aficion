@@ -7,9 +7,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 public class ScoresFeedFragment extends Fragment {
     public static ScoresAdapter mScoresAdapter;
+    public static TextView mMessageTextView;
 
     public ScoresFeedFragment(){}
 
@@ -22,6 +24,7 @@ public class ScoresFeedFragment extends Fragment {
         mScoresFeedRecyclerView.setHasFixedSize(true);
         mScoresAdapter = new ScoresAdapter();
         mScoresFeedRecyclerView.setAdapter(mScoresAdapter);
+        mMessageTextView = rootView.findViewById(R.id.message_display);
         return rootView;
     }
 

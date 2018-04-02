@@ -24,9 +24,8 @@ public class SyncDataTask {
     synchronized public static void syncData(Context context, String teamsFollowing){
         try{
             ContentResolver contentResolver = context.getContentResolver();
-            //input string array with true preferences
             URL newsUrl = NetworkUtils.buildNewsUrl(teamsFollowing);
-            Log.d(SyncDataTask.class.getSimpleName(),"just built news url" + newsUrl);
+            Log.d(SyncDataTask.class.getSimpleName(),"BUILT NEWS URL: " + newsUrl);
             String jsonNewsResponse = NetworkUtils.getResponseFromUrl(newsUrl);
             ContentValues[] newsData = OpenJsonUtils.getNewsFromJson(jsonNewsResponse);
             if(newsData != null && newsData.length != 0){

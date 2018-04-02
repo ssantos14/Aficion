@@ -11,5 +11,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
     </android.support.v7.widget.RecyclerView>
+    <TextView
+        android:id="@+id/message_display"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="32dp"
+        android:text="No games today :("
+        android:visibility="gone"/>
 
 </FrameLayout>

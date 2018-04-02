@@ -7,6 +7,9 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Scanner;
 
 /**
@@ -20,7 +23,6 @@ public class NetworkUtils {
     private static final String TEAMS_BASE_URL = "https://api.fantasydata.net/v3/soccer/scores/json/Teams";
 
     public static URL buildNewsUrl(String qParameter){
-        qParameter = qParameter + " NOT live";
         Uri.Builder uriBuilder = Uri.parse(NEWS_BASE_URL).buildUpon()
                 .appendQueryParameter("pageSize","100")
                 .appendQueryParameter("sortBy","publishedAt")
@@ -44,10 +46,13 @@ public class NetworkUtils {
     }
 
     public static URL buildScoresUrl(){
+        Date date = Calendar.getInstance().getTime();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String formattedDate = dateFormat.format(date);
         Uri builtUri = Uri.parse(SCORES_BASE_URL).buildUpon()
                 .appendPath("JSON")
                 .appendPath("GamesByDate")
-                .appendPath("2018-03-14")
+                .appendPath(formattedDate)
                 .build();
         URL url = null;
         try{
