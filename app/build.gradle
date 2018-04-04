@@ -39,6 +39,9 @@ dependencies {
     //picasso library dependency
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.android.support:preference-v7:26.1.0'
+    //Android-Iconics library dependencies
+    implementation "com.mikepenz:iconics-core:3.0.3@aar"
+    implementation 'com.mikepenz:fontawesome-typeface:5.0.6.0@aar'
 }
 
 repositories {

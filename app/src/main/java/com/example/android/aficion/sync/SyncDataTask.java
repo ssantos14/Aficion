@@ -21,11 +21,10 @@ import java.util.List;
 
 public class SyncDataTask {
 
-    synchronized public static void syncData(Context context, String teamsFollowing){
+    synchronized public static void syncData(Context context, String newsParameter, String[] youtubeParameter){
         try{
             ContentResolver contentResolver = context.getContentResolver();
-            URL newsUrl = NetworkUtils.buildNewsUrl(teamsFollowing);
-            Log.d(SyncDataTask.class.getSimpleName(),"BUILT NEWS URL: " + newsUrl);
+            URL newsUrl = NetworkUtils.buildNewsUrl(newsParameter);
             String jsonNewsResponse = NetworkUtils.getResponseFromUrl(newsUrl);
             ContentValues[] newsData = OpenJsonUtils.getNewsFromJson(jsonNewsResponse);
             if(newsData != null && newsData.length != 0){
@@ -39,11 +38,26 @@ public class SyncDataTask {
                 contentResolver.delete(AficionProvider.Scores.SCORES_CONTENT_URI,null,null);
                 contentResolver.bulkInsert(AficionProvider.Scores.SCORES_CONTENT_URI,scoresData);
             }
-            List<SearchResult> highlightVideosResponse = YoutubeDataUtils.getHighlightsInfo(context);
-            ContentValues[] highlightsData = YoutubeDataUtils.getContentValuesFromSearchResults(highlightVideosResponse);
-            if(highlightsData != null && highlightsData.length != 0){
-                contentResolver.delete(AficionProvider.Highlights.HIGHLIGHTS_CONTENT_URI,null,null);
-                contentResolver.bulkInsert(AficionProvider.Highlights.HIGHLIGHTS_CONTENT_URI,highlightsData);
+            //add for loop for each team
+            if(youtubeParameter != null){
+                for(int i=0; i<youtubeParameter.length;i++){
+                    List<SearchResult> highlightVideosResponse = YoutubeDataUtils.getHighlightsInfo(context,youtubeParameter[i]);
+                    ContentValues[] highlightsData = YoutubeDataUtils.getContentValuesFromSearchResults(highlightVideosResponse);
+                    if(highlightsData != null && highlightsData.length != 0){
+                        if(i==0){
+                            contentResolver.delete(AficionProvider.Highlights.HIGHLIGHTS_CONTENT_URI,null,null);
+                        }
+                        contentResolver.bulkInsert(AficionProvider.Highlights.HIGHLIGHTS_CONTENT_URI,highlightsData);
+                    }
+                }
+            }else{
+                String parameter = "FC Barcelona|Real Madrid|FC Bayern Munich|Paris Saint-Germain|Manchester City FC|Juventus";
+                List<SearchResult> highlightVideosResponse = YoutubeDataUtils.getHighlightsInfo(context,parameter);
+                ContentValues[] highlightsData = YoutubeDataUtils.getContentValuesFromSearchResults(highlightVideosResponse);
+                if(highlightsData != null && highlightsData.length != 0){
+                    contentResolver.delete(AficionProvider.Highlights.HIGHLIGHTS_CONTENT_URI,null,null);
+                    contentResolver.bulkInsert(AficionProvider.Highlights.HIGHLIGHTS_CONTENT_URI,highlightsData);
+                }
             }
             URL teamsURL = NetworkUtils.buildTeamsUrl();
             String jsonTeamsResponse = NetworkUtils.getResponseFromFantasyDataUrl(teamsURL);

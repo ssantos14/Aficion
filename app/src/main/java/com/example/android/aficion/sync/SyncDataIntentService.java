@@ -15,7 +15,8 @@ public class SyncDataIntentService extends IntentService{
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        String queryParameter = intent.getStringExtra(FeedActivity.TEAMS_FOLLOWING_EXTRA);
-        SyncDataTask.syncData(this, queryParameter);
+        String newsParameter = intent.getStringExtra(FeedActivity.NEWS_PARAMETER_EXTRA);
+        String[] youtubeParameter = intent.getStringArrayExtra(FeedActivity.HIGHLIGHTS_PARAMETER_EXTRA);
+        SyncDataTask.syncData(this, newsParameter, youtubeParameter);
     }
 }

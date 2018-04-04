@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.support.v4.view.LayoutInflaterCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.preference.PreferenceManager;
@@ -15,6 +16,7 @@ import android.view.View;
 import com.example.android.aficion.data.AficionProvider;
 import com.example.android.aficion.data.ScoresColumns;
 import com.example.android.aficion.sync.SyncDataIntentService;
+import com.mikepenz.iconics.context.IconicsLayoutInflater2;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,17 +28,15 @@ public class FeedActivity extends AppCompatActivity implements NavigationBarFrag
     private static final int NEWS_LOADER_ID = 12;
     private static final int SCORES_LOADER_ID = 99;
     private static final int HIGHLIGHTS_LOADER_ID = 47;
-    public static final String TEAMS_FOLLOWING_EXTRA = "teams_following";
+    public static final String NEWS_PARAMETER_EXTRA = "news_parameters";
+    public static final String HIGHLIGHTS_PARAMETER_EXTRA = "highlights_parameters";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feed);
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        String queryParameter = getQueryParameter(sharedPreferences);
-        Intent intentToSync = new Intent(this, SyncDataIntentService.class);
-        intentToSync.putExtra(TEAMS_FOLLOWING_EXTRA,queryParameter);
-        startService(intentToSync);
+        startImmediateSync(sharedPreferences);
         sharedPreferences.registerOnSharedPreferenceChangeListener(this);
         NewsFeedFragment newsFeedFragment = new NewsFeedFragment();
         android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
@@ -128,10 +128,7 @@ public class FeedActivity extends AppCompatActivity implements NavigationBarFrag
     }
 
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        String queryParameter = getQueryParameter(sharedPreferences);
-        Intent intentToSync = new Intent(this, SyncDataIntentService.class);
-        intentToSync.putExtra(TEAMS_FOLLOWING_EXTRA,queryParameter);
-        startService(intentToSync);
+        startImmediateSync(sharedPreferences);
     }
 
     @Override
@@ -140,7 +137,7 @@ public class FeedActivity extends AppCompatActivity implements NavigationBarFrag
         PreferenceManager.getDefaultSharedPreferences(this).unregisterOnSharedPreferenceChangeListener(this);
     }
 
-    private String getQueryParameter(SharedPreferences sharedPreferences){
+    private String getNewsQueryParameter(SharedPreferences sharedPreferences){
         Map<String,?> prefs = sharedPreferences.getAll();
         List<String> teamsFollowing = new ArrayList<String>();
         for (Map.Entry<String, ?> entry : prefs.entrySet()) {
@@ -189,5 +186,35 @@ public class FeedActivity extends AppCompatActivity implements NavigationBarFrag
             selection = null;
         }
         return selection;
+    }
+
+    private String[] getYoutubeQueryParameter(SharedPreferences sharedPreferences){
+        Map<String,?> prefs = sharedPreferences.getAll();
+        List<String> teamsFollowing = new ArrayList<String>();
+        for (Map.Entry<String, ?> entry : prefs.entrySet()) {
+            if(entry.getValue().toString() == "true"){
+                teamsFollowing.add(entry.getKey());
+            }
+        }
+        String[] queryParameter;
+        if(teamsFollowing.size() > 0){
+            Object[] teams = teamsFollowing.toArray();
+            queryParameter = new String[teamsFollowing.size()];
+            for(int i =0; i<teams.length; i++){
+                queryParameter[i] = teams[i].toString() + " Highlights";
+            }
+        }else{
+            queryParameter = null;
+        }
+        return queryParameter;
+    }
+
+    private void startImmediateSync(SharedPreferences sharedPreferences){
+        String newsQueryParameter = getNewsQueryParameter(sharedPreferences);
+        String[] youtubeQueryParameter = getYoutubeQueryParameter(sharedPreferences);
+        Intent intentToSync = new Intent(this, SyncDataIntentService.class);
+        intentToSync.putExtra(NEWS_PARAMETER_EXTRA,newsQueryParameter);
+        intentToSync.putExtra(HIGHLIGHTS_PARAMETER_EXTRA,youtubeQueryParameter);
+        startService(intentToSync);
     }
 }
