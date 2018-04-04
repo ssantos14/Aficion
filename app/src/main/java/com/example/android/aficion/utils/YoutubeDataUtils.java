@@ -31,7 +31,7 @@ import java.util.List;
  */
 
 public class YoutubeDataUtils {
-    public static List<SearchResult> getHighlightsInfo(final Context context){
+    public static List<SearchResult> getHighlightsInfo(final Context context, String queryParameters){
         YouTube youtube;
         YouTube.Search.List search;
 
@@ -63,10 +63,12 @@ public class YoutubeDataUtils {
             search = youtube.search().list("id,snippet");
             String apiKey = "AIzaSyDgtCNva4-A2Sd9M7aTuLzBPd2FlkUysl4";
             search.setKey(apiKey);
-            search.setQ("messi");
+            search.setQ(queryParameters);
             search.setType("video");
             search.setFields("items(id/kind,id/videoId,snippet/title,snippet/thumbnails/default/url)");
-            search.setMaxResults((long)25);
+            search.setMaxResults((long)5);
+            search.setOrder("date");
+            search.setTopicId("/m/02vx4");
             SearchListResponse searchResponse = search.execute();
             List<SearchResult> searchResultList = searchResponse.getItems();
             return searchResultList;
@@ -87,8 +89,8 @@ public class YoutubeDataUtils {
         for(int i=0; i<numberOfVideos; i++){
             SearchResult video = highlightsResults.get(i);
             String videoTitle = video.getSnippet().getTitle();
-            String videoThumbnail = video.getSnippet().getThumbnails().getDefault().getUrl();
             String videoId = video.getId().getVideoId();
+            String videoThumbnail = "http://img.youtube.com/vi/" + videoId + "/hqdefault.jpg";
 
             ContentValues videoContentValues = new ContentValues();
             videoContentValues.put(HighlightsColumns.VIDEO_TITLE,videoTitle);
