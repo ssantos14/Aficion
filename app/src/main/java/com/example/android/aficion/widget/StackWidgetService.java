@@ -80,13 +80,13 @@ class StackRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
         if(team2Goals.equals("null")){
             team2Goals = "0";
         }
-        String teams = team1 + " vs " + team2;
-        String score = team1Goals + " - " + team2Goals;
         RemoteViews views = new RemoteViews(mContext.getPackageName(), R.layout.widget_stack_view_item);
-        views.setTextViewText(R.id.teams_text_view, teams);
-        views.setTextViewText(R.id.score_text_view, score);
+        views.setTextViewText(R.id.team1_text_view, team1);
+        views.setTextViewText(R.id.team1_score_text_view, team1Goals);
+        views.setTextViewText(R.id.team2_text_view, team2);
+        views.setTextViewText(R.id.team2_score_text_view, team2Goals);
         Intent startAppIntent = new Intent(mContext,FeedActivity.class);
-        views.setOnClickFillInIntent(R.id.teams_text_view, startAppIntent);
+        views.setOnClickFillInIntent(R.id.team1_text_view, startAppIntent);
         return views;
 
     }

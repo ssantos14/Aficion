@@ -10,6 +10,7 @@ import android.support.v4.view.LayoutInflaterCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.preference.PreferenceManager;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 
@@ -35,7 +36,6 @@ public class FeedActivity extends AppCompatActivity implements NavigationBarFrag
     private static final int HIGHLIGHTS_LOADER_ID = 47;
     public static final String NEWS_PARAMETER_EXTRA = "news_parameters";
     public static final String HIGHLIGHTS_PARAMETER_EXTRA = "highlights_parameters";
-    private AdView mAdView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,10 +45,6 @@ public class FeedActivity extends AppCompatActivity implements NavigationBarFrag
         SyncDataUtils.startImmediateSync(this);
         SyncDataUtils.scheduleFirebaseJobDispatcherSync(this);
         sharedPreferences.registerOnSharedPreferenceChangeListener(this);
-        MobileAds.initialize(this,"ca-app-pub-8633006304319916~8819182894");
-        mAdView = findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
         NewsFeedFragment newsFeedFragment = new NewsFeedFragment();
         android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().add(R.id.feed_container, newsFeedFragment).commit();

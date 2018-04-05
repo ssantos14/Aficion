@@ -24,10 +24,10 @@ public class NetworkUtils {
 
     public static URL buildNewsUrl(String qParameter){
         Uri.Builder uriBuilder = Uri.parse(NEWS_BASE_URL).buildUpon()
-                .appendQueryParameter("pageSize","100")
+                .appendQueryParameter("pageSize","25")
                 .appendQueryParameter("sortBy","publishedAt")
                 .appendQueryParameter("language","en")
-//                .appendQueryParameter("domains","espnfc.com")
+                .appendQueryParameter("domains","espnfc.com")
                 .appendQueryParameter("apiKey","c9e9020b9f7f44ec9f2f61b5cfbf3763");
         if(qParameter == null){
             uriBuilder.appendQueryParameter("q","FC Barcelona OR Real Madrid OR FC Bayern Munich " +

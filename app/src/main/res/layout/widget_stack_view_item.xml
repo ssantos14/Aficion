@@ -1,28 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/stackWidgetItem"
-    android:layout_height="match_parent"
-    android:layout_width="match_parent"
-    android:padding="4dp"
-    android:background="@color/colorPrimary">
-    <TextView
-        android:id="@+id/teams_text_view"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:maxLines="7"
-        android:paddingTop="6dp"
-        android:paddingBottom="6dp"
-        android:paddingRight="6dp"
-        android:paddingLeft="0dp">
-    </TextView>
-    <TextView
-        android:id="@+id/score_text_view"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:maxLines="7"
-        android:paddingTop="6dp"
-        android:paddingBottom="6dp"
-        android:paddingRight="6dp"
-        android:paddingLeft="0dp">
-    </TextView>
+    android:layout_height="wrap_content"
+    android:layout_width="280dp"
+    android:padding="8dp"
+    android:background="@android:color/white"
+    android:orientation="vertical">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/team1_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="22sp"
+            android:textColor="@color/colorPrimaryDark"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"/>
+
+        <TextView
+            android:id="@+id/team1_score_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="22sp"
+            android:textColor="@color/colorPrimaryDark"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"/>
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/team2_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="22sp"
+            android:textColor="@color/colorPrimaryDark"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"/>
+
+        <TextView
+            android:id="@+id/team2_score_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="22sp"
+            android:textColor="@color/colorPrimaryDark"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"/>
+    </RelativeLayout>
 </LinearLayout>

@@ -18,5 +18,15 @@
         android:padding="32dp"
         android:text="No games today :("
         android:visibility="gone"/>
+    <com.google.android.gms.ads.AdView
+        xmlns:ads="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/adView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        ads:adSize="BANNER"
+        ads:adUnitId="ca-app-pub-3940256099942544/6300978111"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginBottom="4dp">
+    </com.google.android.gms.ads.AdView>
 
 </FrameLayout>

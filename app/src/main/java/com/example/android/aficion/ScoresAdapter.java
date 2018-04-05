@@ -2,12 +2,18 @@ package com.example.android.aficion;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.android.aficion.data.AficionProvider;
+import com.example.android.aficion.data.TeamsColumns;
+import com.squareup.picasso.Picasso;
 
 /**
  * Created by Sylvana on 3/25/2018.
@@ -47,12 +53,16 @@ public class ScoresAdapter extends RecyclerView.Adapter<ScoresAdapter.ScoreViewH
     }
 
     class ScoreViewHolder extends RecyclerView.ViewHolder{
-        TextView GameTeamsTextView;
-        TextView GameScoreTextView;
+        TextView Team1TextView;
+        TextView Team1ScoreTextView;
+        TextView Team2TextView;
+        TextView Team2ScoreTextView;
         public ScoreViewHolder(View itemView){
             super(itemView);
-            GameTeamsTextView = itemView.findViewById(R.id.game_teams_text_view);
-            GameScoreTextView = itemView.findViewById(R.id.game_score_text_view);
+            Team1TextView = itemView.findViewById(R.id.team1_text_view);
+            Team1ScoreTextView = itemView.findViewById(R.id.team1_score_text_view);
+            Team2TextView = itemView.findViewById(R.id.team2_text_view);
+            Team2ScoreTextView = itemView.findViewById(R.id.team2_score_text_view);
         }
         void bind(int itemIndex){
             mScoresData.moveToPosition(itemIndex);
@@ -66,10 +76,11 @@ public class ScoresAdapter extends RecyclerView.Adapter<ScoresAdapter.ScoreViewH
             if(team2Goals.equals("null")){
                 team2Goals = "0";
             }
-            String teams = team1 + " vs " + team2;
-            String score = team1Goals + " - " + team2Goals;
-            GameTeamsTextView.setText(teams);
-            GameScoreTextView.setText(score);
+            Team1TextView.setText(team1);
+            Team1ScoreTextView.setText(team1Goals);
+            Team2TextView.setText(team2);
+            Team2ScoreTextView.setText(team2Goals);
         }
     }
+
 }
