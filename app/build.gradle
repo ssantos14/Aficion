@@ -29,6 +29,7 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+    //recycler view dependency
     implementation 'com.android.support:recyclerview-v7:26.1.0'
     //these dependencies are for accessing the youtube data api
     compile 'com.google.api-client:google-api-client-android:1.23.0'
@@ -42,6 +43,10 @@ dependencies {
     //Android-Iconics library dependencies
     implementation "com.mikepenz:iconics-core:3.0.3@aar"
     implementation 'com.mikepenz:fontawesome-typeface:5.0.6.0@aar'
+    //card view dependency
+    implementation 'com.android.support:cardview-v7:26.1.0'
+    //job dispatcher dependency
+    implementation 'com.firebase:firebase-jobdispatcher:0.5.0'
 }
 
 repositories {

@@ -67,7 +67,7 @@ public class YoutubeDataUtils {
             search.setType("video");
             search.setFields("items(id/kind,id/videoId,snippet/title,snippet/thumbnails/default/url)");
             search.setMaxResults((long)5);
-            search.setOrder("date");
+            search.setOrder("relevance");
             search.setTopicId("/m/02vx4");
             SearchListResponse searchResponse = search.execute();
             List<SearchResult> searchResultList = searchResponse.getItems();

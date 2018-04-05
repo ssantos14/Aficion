@@ -17,21 +17,18 @@
         android:layout_weight="1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:src="@drawable/news_feed_icon"
         android:background="@color/colorPrimary"/>
     <ImageButton
         android:id="@+id/navigation_highlights"
         android:layout_weight="1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:src="@drawable/news_feed_icon"
         android:background="@color/colorPrimary"/>
     <ImageButton
         android:id="@+id/navigation_following"
         android:layout_weight="1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:src="@drawable/news_feed_icon"
         android:background="@color/colorPrimary"/>
 
 </LinearLayout>

@@ -16,6 +16,8 @@ import android.view.View;
 import com.example.android.aficion.data.AficionProvider;
 import com.example.android.aficion.data.ScoresColumns;
 import com.example.android.aficion.sync.SyncDataIntentService;
+import com.example.android.aficion.sync.SyncDataTask;
+import com.example.android.aficion.sync.SyncDataUtils;
 import com.mikepenz.iconics.context.IconicsLayoutInflater2;
 
 import java.util.ArrayList;
@@ -36,7 +38,8 @@ public class FeedActivity extends AppCompatActivity implements NavigationBarFrag
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feed);
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        startImmediateSync(sharedPreferences);
+        SyncDataUtils.startImmediateSync(this);
+        SyncDataUtils.scheduleFirebaseJobDispatcherSync(this);
         sharedPreferences.registerOnSharedPreferenceChangeListener(this);
         NewsFeedFragment newsFeedFragment = new NewsFeedFragment();
         android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
@@ -128,7 +131,7 @@ public class FeedActivity extends AppCompatActivity implements NavigationBarFrag
     }
 
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        startImmediateSync(sharedPreferences);
+        SyncDataUtils.startImmediateSync(this);
     }
 
     @Override
@@ -137,33 +140,7 @@ public class FeedActivity extends AppCompatActivity implements NavigationBarFrag
         PreferenceManager.getDefaultSharedPreferences(this).unregisterOnSharedPreferenceChangeListener(this);
     }
 
-    private String getNewsQueryParameter(SharedPreferences sharedPreferences){
-        Map<String,?> prefs = sharedPreferences.getAll();
-        List<String> teamsFollowing = new ArrayList<String>();
-        for (Map.Entry<String, ?> entry : prefs.entrySet()) {
-            if(entry.getValue().toString() == "true"){
-                teamsFollowing.add(entry.getKey());
-            }
-        }
-        String queryParameter = "";
-        if(teamsFollowing.size() > 0){
-            Object[] teams = teamsFollowing.toArray();
-            for(int i =0; i<teams.length; i++){
-                queryParameter = queryParameter + teams[i];
-                if(i < teams.length-1){
-                    queryParameter = queryParameter + " OR ";
-                }else{
-                    queryParameter = queryParameter + " NOT live";
-                }
-            }
-            Log.d(FeedActivity.class.getSimpleName(),"QUERY PARAMETER BUILT: " + queryParameter);
-        }else{
-            queryParameter = null;
-        }
-        return queryParameter;
-    }
-
-    private String getCursorSelection(SharedPreferences sharedPreferences){
+    public static String getCursorSelection(SharedPreferences sharedPreferences){
         Map<String,?> prefs = sharedPreferences.getAll();
         List<String> teamsFollowing = new ArrayList<String>();
         for (Map.Entry<String, ?> entry : prefs.entrySet()) {
@@ -181,40 +158,11 @@ public class FeedActivity extends AppCompatActivity implements NavigationBarFrag
                     selection = selection + " OR ";
                 }
             }
-            Log.d(FeedActivity.class.getSimpleName(),"QUERY PARAMETER BUILT: " + selection);
+            Log.d(FeedActivity.class.getSimpleName(),"SCORES QUERY PARAMETER BUILT: " + selection);
         }else{
             selection = null;
         }
         return selection;
     }
 
-    private String[] getYoutubeQueryParameter(SharedPreferences sharedPreferences){
-        Map<String,?> prefs = sharedPreferences.getAll();
-        List<String> teamsFollowing = new ArrayList<String>();
-        for (Map.Entry<String, ?> entry : prefs.entrySet()) {
-            if(entry.getValue().toString() == "true"){
-                teamsFollowing.add(entry.getKey());
-            }
-        }
-        String[] queryParameter;
-        if(teamsFollowing.size() > 0){
-            Object[] teams = teamsFollowing.toArray();
-            queryParameter = new String[teamsFollowing.size()];
-            for(int i =0; i<teams.length; i++){
-                queryParameter[i] = teams[i].toString() + " Highlights";
-            }
-        }else{
-            queryParameter = null;
-        }
-        return queryParameter;
-    }
-
-    private void startImmediateSync(SharedPreferences sharedPreferences){
-        String newsQueryParameter = getNewsQueryParameter(sharedPreferences);
-        String[] youtubeQueryParameter = getYoutubeQueryParameter(sharedPreferences);
-        Intent intentToSync = new Intent(this, SyncDataIntentService.class);
-        intentToSync.putExtra(NEWS_PARAMETER_EXTRA,newsQueryParameter);
-        intentToSync.putExtra(HIGHLIGHTS_PARAMETER_EXTRA,youtubeQueryParameter);
-        startService(intentToSync);
-    }
 }

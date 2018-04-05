@@ -51,7 +51,7 @@ public class SyncDataTask {
                     }
                 }
             }else{
-                String parameter = "FC Barcelona|Real Madrid|FC Bayern Munich|Paris Saint-Germain|Manchester City FC|Juventus";
+                String parameter = "Highlights";
                 List<SearchResult> highlightVideosResponse = YoutubeDataUtils.getHighlightsInfo(context,parameter);
                 ContentValues[] highlightsData = YoutubeDataUtils.getContentValuesFromSearchResults(highlightVideosResponse);
                 if(highlightsData != null && highlightsData.length != 0){
