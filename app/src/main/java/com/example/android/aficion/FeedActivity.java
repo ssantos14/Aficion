@@ -18,6 +18,9 @@ import com.example.android.aficion.data.ScoresColumns;
 import com.example.android.aficion.sync.SyncDataIntentService;
 import com.example.android.aficion.sync.SyncDataTask;
 import com.example.android.aficion.sync.SyncDataUtils;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 import com.mikepenz.iconics.context.IconicsLayoutInflater2;
 
 import java.util.ArrayList;
@@ -32,6 +35,7 @@ public class FeedActivity extends AppCompatActivity implements NavigationBarFrag
     private static final int HIGHLIGHTS_LOADER_ID = 47;
     public static final String NEWS_PARAMETER_EXTRA = "news_parameters";
     public static final String HIGHLIGHTS_PARAMETER_EXTRA = "highlights_parameters";
+    private AdView mAdView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +45,10 @@ public class FeedActivity extends AppCompatActivity implements NavigationBarFrag
         SyncDataUtils.startImmediateSync(this);
         SyncDataUtils.scheduleFirebaseJobDispatcherSync(this);
         sharedPreferences.registerOnSharedPreferenceChangeListener(this);
+        MobileAds.initialize(this,"ca-app-pub-8633006304319916~8819182894");
+        mAdView = findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
         NewsFeedFragment newsFeedFragment = new NewsFeedFragment();
         android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().add(R.id.feed_container, newsFeedFragment).commit();
