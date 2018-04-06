@@ -4,10 +4,13 @@
     android:layout_height="match_parent"
     tools:context="com.example.android.aficion.NewsFeedFragment">
 
-    <android.support.v7.widget.RecyclerView
+    <com.example.android.aficion.AutoFitRecyclerView
         android:id="@+id/news_recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    </android.support.v7.widget.RecyclerView>
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:columnWidth="@dimen/news_recyclerview_column_width"
+        android:layout_margin="@dimen/recyclerview_margin">
+    </com.example.android.aficion.AutoFitRecyclerView>
 
 </FrameLayout>

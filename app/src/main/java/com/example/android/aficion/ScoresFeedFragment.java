@@ -28,8 +28,6 @@ public class ScoresFeedFragment extends Fragment {
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
         RecyclerView mScoresFeedRecyclerView = rootView.findViewById(R.id.scores_recycler_view);
-        GridLayoutManager layoutManager = new GridLayoutManager(getContext(),1);
-        mScoresFeedRecyclerView.setLayoutManager(layoutManager);
         mScoresFeedRecyclerView.setHasFixedSize(true);
         mScoresAdapter = new ScoresAdapter();
         mScoresFeedRecyclerView.setAdapter(mScoresAdapter);

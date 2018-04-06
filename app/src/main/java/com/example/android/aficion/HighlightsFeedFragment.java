@@ -17,8 +17,6 @@ public class HighlightsFeedFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_highlights_feed,container,false);
         RecyclerView highlightsRecyclerView = rootView.findViewById(R.id.highlight_recycler_view);
-        GridLayoutManager layoutManager = new GridLayoutManager(getContext(),1);
-        highlightsRecyclerView.setLayoutManager(layoutManager);
         highlightsRecyclerView.setHasFixedSize(true);
         mHighlightsAdapter = new HighlightsAdapter();
         highlightsRecyclerView.setAdapter(mHighlightsAdapter);

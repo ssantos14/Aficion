@@ -6,11 +6,14 @@
     android:layout_height="match_parent"
     tools:context="com.example.android.aficion.ScoresFeedFragment">
 
-    <android.support.v7.widget.RecyclerView
+    <com.example.android.aficion.AutoFitRecyclerView
         android:id="@+id/scores_recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    </android.support.v7.widget.RecyclerView>
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:columnWidth="@dimen/scores_recyclerview_column_width"
+        android:layout_margin="@dimen/recyclerview_margin">
+    </com.example.android.aficion.AutoFitRecyclerView>
     <TextView
         android:id="@+id/message_display"
         android:layout_width="match_parent"

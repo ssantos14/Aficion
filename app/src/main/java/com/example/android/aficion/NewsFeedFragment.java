@@ -18,8 +18,6 @@ public class NewsFeedFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_news_feed,container,false);
         mNewsFeedRecyclerView = rootView.findViewById(R.id.news_recycler_view);
-        GridLayoutManager layoutManager = new GridLayoutManager(getContext(),1);
-        mNewsFeedRecyclerView.setLayoutManager(layoutManager);
         mNewsFeedRecyclerView.setHasFixedSize(true);
         mNewsAdapter = new NewsAdapter();
         mNewsFeedRecyclerView.setAdapter(mNewsAdapter);
