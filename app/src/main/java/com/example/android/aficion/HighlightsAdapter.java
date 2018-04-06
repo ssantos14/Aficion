@@ -18,13 +18,20 @@ import com.squareup.picasso.Picasso;
 public class HighlightsAdapter extends RecyclerView.Adapter<HighlightsAdapter.HighlightsViewHolder>{
     private Cursor mHighlightsData;
     private int mNumberOfItems;
+    private final HighlightsAdapterOnClickHandler mClickHandler;
 
-    public HighlightsAdapter(){}
+    public HighlightsAdapter(HighlightsAdapterOnClickHandler clickHandler){
+        mClickHandler = clickHandler;
+    }
 
     public void setHighlightsCursor(Cursor highlightsData){
         mHighlightsData = highlightsData;
         mNumberOfItems = mHighlightsData.getCount();
         notifyDataSetChanged();
+    }
+
+    public interface HighlightsAdapterOnClickHandler{
+        void OnHighlightsVideoClick(String videoId);
     }
 
     @Override
@@ -49,14 +56,24 @@ public class HighlightsAdapter extends RecyclerView.Adapter<HighlightsAdapter.Hi
     }
 
 
-    class HighlightsViewHolder extends RecyclerView.ViewHolder{
+    class HighlightsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         TextView videoTitleTextView;
         ImageView videoThumbnail;
         public HighlightsViewHolder(View itemView){
             super(itemView);
             videoTitleTextView = itemView.findViewById(R.id.video_title_text_view);
             videoThumbnail = itemView.findViewById(R.id.video_thumbnail);
+            itemView.setOnClickListener(this);
         }
+
+        @Override
+        public void onClick(View view) {
+            int adapterPosition = getAdapterPosition();
+            mHighlightsData.moveToPosition(adapterPosition);
+            String videoId = mHighlightsData.getString(1);
+            mClickHandler.OnHighlightsVideoClick(videoId);
+        }
+
         void bind(int itemIndex){
             mHighlightsData.moveToPosition(itemIndex);
             String title = mHighlightsData.getString(0);

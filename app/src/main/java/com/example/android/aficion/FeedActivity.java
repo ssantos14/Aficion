@@ -3,6 +3,9 @@ package com.example.android.aficion;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.net.Uri;
+import android.os.Parcelable;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -168,5 +171,18 @@ public class FeedActivity extends AppCompatActivity implements NavigationBarFrag
         }
         return selection;
     }
+
+
+//    @Override
+//    protected void onSaveInstanceState(Bundle outState) {
+//        super.onSaveInstanceState(outState);
+//        Parcelable newsState = getSupportFragmentManager().saveFragmentInstanceState(newsFeedFragment);
+//        outState.putParcelable("NEWS_STATE",newsState);
+//    }
+//
+//    @Override
+//    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+//        super.onRestoreInstanceState(savedInstanceState);
+//    }
 
 }

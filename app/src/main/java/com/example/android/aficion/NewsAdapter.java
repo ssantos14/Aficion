@@ -19,13 +19,20 @@ import com.squareup.picasso.Picasso;
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ArticleViewHolder> {
     private int mNumberOfNewsArticles;
     private Cursor mNewsData;
+    private final NewsAdapterOnClickHandler mClickHandler;
 
-    public NewsAdapter(){}
+    public NewsAdapter(NewsAdapterOnClickHandler clickHandler){
+        mClickHandler = clickHandler;
+    }
 
     public void setNewsCursor(Cursor newsCursor){
         mNewsData = newsCursor;
         mNumberOfNewsArticles = mNewsData.getCount();
         notifyDataSetChanged();
+    }
+
+    public interface NewsAdapterOnClickHandler{
+        void onNewsArticleClick(String articleUrl);
     }
 
     @Override
@@ -50,14 +57,24 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ArticleViewHol
     }
 
 
-    class ArticleViewHolder extends RecyclerView.ViewHolder{
+    class ArticleViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         TextView ArticleTitleTextView;
         ImageView ArticleImageView;
         public ArticleViewHolder(View itemView){
             super(itemView);
             ArticleTitleTextView = itemView.findViewById(R.id.news_item_title);
             ArticleImageView = itemView.findViewById(R.id.news_item_image);
+            itemView.setOnClickListener(this);
         }
+
+        @Override
+        public void onClick(View view) {
+            int adapterPosition = getAdapterPosition();
+            mNewsData.moveToPosition(adapterPosition);
+            String url = mNewsData.getString(2);
+            mClickHandler.onNewsArticleClick(url);
+        }
+
         void bind(int articleIndex){
             mNewsData.moveToPosition(articleIndex);
             String title = mNewsData.getString(0);
