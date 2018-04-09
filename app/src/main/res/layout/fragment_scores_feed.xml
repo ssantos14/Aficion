@@ -19,7 +19,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="32dp"
-        android:text="No games today :("
+        android:text="@string/no_games_message"
+        android:textSize="24sp"
+        android:textAlignment="center"
         android:visibility="gone"/>
     <com.google.android.gms.ads.AdView
         xmlns:ads="http://schemas.android.com/apk/res-auto"

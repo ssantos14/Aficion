@@ -42,10 +42,8 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ArticleViewHol
         Context context = parent.getContext();
         int layoutIdForItem = R.layout.news_list_item;
         LayoutInflater layoutInflater = LayoutInflater.from(context);
-        boolean shouldAttachToParentImmediately = false;
-        View view = layoutInflater.inflate(layoutIdForItem,parent,shouldAttachToParentImmediately);
-        ArticleViewHolder viewHolder = new ArticleViewHolder(view);
-        return viewHolder;
+        View view = layoutInflater.inflate(layoutIdForItem,parent,false);
+        return new ArticleViewHolder(view);
     }
 
     @Override

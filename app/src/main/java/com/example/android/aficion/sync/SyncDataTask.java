@@ -24,7 +24,7 @@ public class SyncDataTask {
     synchronized public static void syncData(Context context, String newsParameter, String[] youtubeParameter){
         try{
             ContentResolver contentResolver = context.getContentResolver();
-            URL newsUrl = NetworkUtils.buildNewsUrl(newsParameter);
+            URL newsUrl = NetworkUtils.buildNewsUrl(newsParameter,context);
             String jsonNewsResponse = NetworkUtils.getResponseFromUrl(newsUrl);
             ContentValues[] newsData = OpenJsonUtils.getNewsFromJson(jsonNewsResponse);
             if(newsData != null && newsData.length != 0){
@@ -32,7 +32,7 @@ public class SyncDataTask {
                 contentResolver.bulkInsert(AficionProvider.News.NEWS_CONTENT_URI,newsData);
             }
             URL scoresURL = NetworkUtils.buildScoresUrl();
-            String jsonScoresResponse = NetworkUtils.getResponseFromFantasyDataUrl(scoresURL);
+            String jsonScoresResponse = NetworkUtils.getResponseFromFantasyDataUrl(scoresURL,context);
             ContentValues[] scoresData = OpenJsonUtils.getScoresFromJson(jsonScoresResponse);
             if(scoresData != null && scoresData.length != 0){
                 contentResolver.delete(AficionProvider.Scores.SCORES_CONTENT_URI,null,null);
@@ -60,7 +60,7 @@ public class SyncDataTask {
                 }
             }
             URL teamsURL = NetworkUtils.buildTeamsUrl();
-            String jsonTeamsResponse = NetworkUtils.getResponseFromFantasyDataUrl(teamsURL);
+            String jsonTeamsResponse = NetworkUtils.getResponseFromFantasyDataUrl(teamsURL,context);
             ContentValues[] teamsData = OpenJsonUtils.getTeamsFromJson(jsonTeamsResponse);
             if(teamsData != null && teamsData.length != 0){
                 contentResolver.delete(AficionProvider.Teams.TEAMS_CONTENT_URI,null,null);

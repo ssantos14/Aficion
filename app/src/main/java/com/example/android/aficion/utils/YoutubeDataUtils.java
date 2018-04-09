@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 import android.util.Log;
 
+import com.example.android.aficion.R;
 import com.example.android.aficion.data.AficionProvider;
 import com.example.android.aficion.data.HighlightsColumns;
 import com.google.api.client.extensions.android.http.AndroidHttp;
@@ -61,7 +62,7 @@ public class YoutubeDataUtils {
                 }
             }).setApplicationName("Aficion").build();
             search = youtube.search().list("id,snippet");
-            String apiKey = "AIzaSyDgtCNva4-A2Sd9M7aTuLzBPd2FlkUysl4";
+            String apiKey = context.getString(R.string.youtube_data_api_key);
             search.setKey(apiKey);
             search.setQ(queryParameters);
             search.setType("video");
@@ -70,8 +71,7 @@ public class YoutubeDataUtils {
             search.setOrder("relevance");
             search.setTopicId("/m/02vx4");
             SearchListResponse searchResponse = search.execute();
-            List<SearchResult> searchResultList = searchResponse.getItems();
-            return searchResultList;
+            return searchResponse.getItems();
         } catch (GoogleJsonResponseException e) {
             System.err.println("There was a service error: " + e.getDetails().getCode() + " : "
                     + e.getDetails().getMessage());

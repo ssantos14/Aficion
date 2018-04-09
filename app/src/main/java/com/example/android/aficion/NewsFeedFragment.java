@@ -19,7 +19,6 @@ import android.view.ViewGroup;
 import com.example.android.aficion.data.AficionProvider;
 
 public class NewsFeedFragment extends Fragment implements NewsAdapter.NewsAdapterOnClickHandler,LoaderManager.LoaderCallbacks<Cursor> {
-    private RecyclerView mNewsFeedRecyclerView;
     public static NewsAdapter mNewsAdapter;
     private static final int NEWS_LOADER_ID = 12;
 
@@ -28,7 +27,7 @@ public class NewsFeedFragment extends Fragment implements NewsAdapter.NewsAdapte
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_news_feed,container,false);
-        mNewsFeedRecyclerView = rootView.findViewById(R.id.news_recycler_view);
+        RecyclerView mNewsFeedRecyclerView = rootView.findViewById(R.id.news_recycler_view);
         mNewsFeedRecyclerView.setHasFixedSize(true);
         mNewsAdapter = new NewsAdapter(this);
         mNewsFeedRecyclerView.setAdapter(mNewsAdapter);

@@ -13,27 +13,27 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:background="@color/colorPrimary"
-        android:contentDescription="TODO" />
+        android:contentDescription="@string/news_content_description" />
     <ImageButton
         android:id="@+id/navigation_scores"
         android:layout_weight="1"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:background="@color/colorPrimary"
-        android:contentDescription="TODO" />
+        android:contentDescription="@string/scores_content_description" />
     <ImageButton
         android:id="@+id/navigation_highlights"
         android:layout_weight="1"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:background="@color/colorPrimary"
-        android:contentDescription="TODO" />
+        android:contentDescription="@string/highlights_content_description" />
     <ImageButton
         android:id="@+id/navigation_following"
         android:layout_weight="1"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:background="@color/colorPrimary"
-        android:contentDescription="TODO" />
+        android:contentDescription="@string/following_content_description" />
 
 </LinearLayout>

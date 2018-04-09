@@ -28,7 +28,7 @@ import java.util.Map;
 
 public class ScoresFeedFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
     public static ScoresAdapter mScoresAdapter;
-    public static TextView mMessageTextView;
+    public TextView mMessageTextView;
     public static AdView mAdView;
     private static final int SCORES_LOADER_ID = 99;
 
@@ -75,7 +75,7 @@ public class ScoresFeedFragment extends Fragment implements LoaderManager.Loader
         Map<String,?> prefs = sharedPreferences.getAll();
         List<String> teamsFollowing = new ArrayList<String>();
         for (Map.Entry<String, ?> entry : prefs.entrySet()) {
-            if(entry.getValue().toString() == "true"){
+            if(entry.getValue().toString().equals("true")){
                 teamsFollowing.add(entry.getKey());
             }
         }

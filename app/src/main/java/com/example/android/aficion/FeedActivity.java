@@ -1,35 +1,11 @@
 package com.example.android.aficion;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
-import android.net.Uri;
-import android.os.Parcelable;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.CursorLoader;
-import android.support.v4.content.Loader;
-import android.support.v4.view.LayoutInflaterCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.preference.PreferenceManager;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.View;
 
-import com.example.android.aficion.data.AficionProvider;
-import com.example.android.aficion.data.ScoresColumns;
-import com.example.android.aficion.sync.SyncDataIntentService;
-import com.example.android.aficion.sync.SyncDataTask;
 import com.example.android.aficion.sync.SyncDataUtils;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.MobileAds;
-import com.mikepenz.iconics.context.IconicsLayoutInflater2;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 
 public class FeedActivity extends AppCompatActivity implements NavigationBarFragment.OnFeedClickListener,

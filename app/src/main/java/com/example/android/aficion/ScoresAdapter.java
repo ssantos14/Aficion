@@ -38,10 +38,8 @@ public class ScoresAdapter extends RecyclerView.Adapter<ScoresAdapter.ScoreViewH
         Context context = parent.getContext();
         int layoutIdForItem = R.layout.scores_list_item;
         LayoutInflater layoutInflater = LayoutInflater.from(context);
-        boolean shouldAttachToParentImmediately = false;
-        View view = layoutInflater.inflate(layoutIdForItem,parent,shouldAttachToParentImmediately);
-        ScoreViewHolder viewHolder = new ScoreViewHolder(view);
-        return viewHolder;
+        View view = layoutInflater.inflate(layoutIdForItem,parent,false);
+        return new ScoreViewHolder(view);
     }
 
     @Override

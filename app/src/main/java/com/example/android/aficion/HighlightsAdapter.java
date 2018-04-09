@@ -41,10 +41,8 @@ public class HighlightsAdapter extends RecyclerView.Adapter<HighlightsAdapter.Hi
         Context context = parent.getContext();
         int layoutIdForItem = R.layout.highlights_list_item;
         LayoutInflater layoutInflater = LayoutInflater.from(context);
-        boolean shouldAttachToParentImmediately = false;
-        View view = layoutInflater.inflate(layoutIdForItem,parent,shouldAttachToParentImmediately);
-        HighlightsViewHolder highlightsViewHolder = new HighlightsViewHolder(view);
-        return highlightsViewHolder;
+        View view = layoutInflater.inflate(layoutIdForItem,parent,false);
+        return new HighlightsViewHolder(view);
     }
 
     @Override

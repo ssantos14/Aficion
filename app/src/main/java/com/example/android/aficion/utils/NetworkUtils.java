@@ -1,6 +1,9 @@
 package com.example.android.aficion.utils;
 
+import android.content.Context;
 import android.net.Uri;
+
+import com.example.android.aficion.R;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -22,13 +25,13 @@ public class NetworkUtils {
     private static final String SCORES_BASE_URL = "https://api.fantasydata.net/v3/soccer/scores";
     private static final String TEAMS_BASE_URL = "https://api.fantasydata.net/v3/soccer/scores/json/Teams";
 
-    public static URL buildNewsUrl(String qParameter){
+    public static URL buildNewsUrl(String qParameter, Context context){
         Uri.Builder uriBuilder = Uri.parse(NEWS_BASE_URL).buildUpon()
                 .appendQueryParameter("pageSize","25")
                 .appendQueryParameter("sortBy","publishedAt")
                 .appendQueryParameter("language","en")
                 .appendQueryParameter("domains","espnfc.com")
-                .appendQueryParameter("apiKey","c9e9020b9f7f44ec9f2f61b5cfbf3763");
+                .appendQueryParameter("apiKey",context.getString(R.string.news_api_key));
         if(qParameter == null){
             uriBuilder.appendQueryParameter("q","FC Barcelona OR Real Madrid OR FC Bayern Munich " +
                     "OR Paris Saint-Germain OR Manchester City FC OR Juventus NOT live");
@@ -93,10 +96,10 @@ public class NetworkUtils {
         }
     }
 
-    public static String getResponseFromFantasyDataUrl(URL url) throws IOException {
+    public static String getResponseFromFantasyDataUrl(URL url, Context context) throws IOException {
         HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
         try {
-            urlConnection.setRequestProperty("Ocp-Apim-Subscription-Key","53ec4afb9f6b41d79f6ee6395e8714d3");
+            urlConnection.setRequestProperty("Ocp-Apim-Subscription-Key",context.getString(R.string.fantasy_data_api_key));
             InputStream in = urlConnection.getInputStream();
 
             Scanner scanner = new Scanner(in);
