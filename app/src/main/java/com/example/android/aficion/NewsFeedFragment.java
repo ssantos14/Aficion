@@ -1,19 +1,27 @@
 package com.example.android.aficion;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class NewsFeedFragment extends Fragment implements NewsAdapter.NewsAdapterOnClickHandler {
+import com.example.android.aficion.data.AficionProvider;
+
+public class NewsFeedFragment extends Fragment implements NewsAdapter.NewsAdapterOnClickHandler,LoaderManager.LoaderCallbacks<Cursor> {
     private RecyclerView mNewsFeedRecyclerView;
     public static NewsAdapter mNewsAdapter;
+    private static final int NEWS_LOADER_ID = 12;
 
     public NewsFeedFragment(){}
 
@@ -24,6 +32,7 @@ public class NewsFeedFragment extends Fragment implements NewsAdapter.NewsAdapte
         mNewsFeedRecyclerView.setHasFixedSize(true);
         mNewsAdapter = new NewsAdapter(this);
         mNewsFeedRecyclerView.setAdapter(mNewsAdapter);
+        getLoaderManager().initLoader(NEWS_LOADER_ID,null,this);
         return rootView;
     }
 
@@ -34,21 +43,19 @@ public class NewsFeedFragment extends Fragment implements NewsAdapter.NewsAdapte
         startActivity(openArticleIntent);
     }
 
-//    @Override
-//    public void onActivityCreated(Bundle savedInstanceState) {
-//        super.onActivityCreated(savedInstanceState);
-//        if (savedInstanceState != null) {
-//            Parcelable state = savedInstanceState.getParcelable("SCROLL_POSITION");
-//            mNewsFeedRecyclerView.getLayoutManager().onRestoreInstanceState(state);
-//            //Restore the fragment's state here
-//        }
-//    }
-//
-//    @Override
-//    public void onSaveInstanceState(Bundle outState) {
-//        super.onSaveInstanceState(outState);
-//        Parcelable state = mNewsFeedRecyclerView.getLayoutManager().onSaveInstanceState();
-//        outState.putParcelable("SCROLL_POSITION", state);
-//    }
+    @Override
+    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+        return new CursorLoader(getActivity(), AficionProvider.News.NEWS_CONTENT_URI, null, null, null, null);
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        mNewsAdapter.setNewsCursor(data);
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+        mNewsAdapter.setNewsCursor(null);
+    }
 
 }

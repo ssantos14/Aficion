@@ -25,9 +25,11 @@ public class HighlightsAdapter extends RecyclerView.Adapter<HighlightsAdapter.Hi
     }
 
     public void setHighlightsCursor(Cursor highlightsData){
-        mHighlightsData = highlightsData;
-        mNumberOfItems = mHighlightsData.getCount();
-        notifyDataSetChanged();
+        if(highlightsData != null){
+            mHighlightsData = highlightsData;
+            mNumberOfItems = mHighlightsData.getCount();
+            notifyDataSetChanged();
+        }
     }
 
     public interface HighlightsAdapterOnClickHandler{

@@ -11,6 +11,7 @@ import android.widget.RemoteViewsService;
 
 import com.example.android.aficion.FeedActivity;
 import com.example.android.aficion.R;
+import com.example.android.aficion.ScoresFeedFragment;
 import com.example.android.aficion.data.AficionProvider;
 import com.example.android.aficion.data.ScoresColumns;
 
@@ -44,7 +45,7 @@ class StackRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
     @Override
     public void onDataSetChanged() {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(mContext);
-        String selection = FeedActivity.getCursorSelection(sharedPreferences);
+        String selection = ScoresFeedFragment.getCursorSelection(sharedPreferences);
         if (mCursor != null) mCursor.close();
         mCursor = mContext.getContentResolver().query(
                 AficionProvider.Scores.SCORES_CONTENT_URI,

@@ -26,9 +26,11 @@ public class ScoresAdapter extends RecyclerView.Adapter<ScoresAdapter.ScoreViewH
     public ScoresAdapter(){}
 
     public void setScoresCursor(Cursor scoresData){
-        mScoresData = scoresData;
-        mNumberOfItems = mScoresData.getCount();
-        notifyDataSetChanged();
+        if(scoresData != null){
+            mScoresData = scoresData;
+            mNumberOfItems = mScoresData.getCount();
+            notifyDataSetChanged();
+        }
     }
 
     @Override

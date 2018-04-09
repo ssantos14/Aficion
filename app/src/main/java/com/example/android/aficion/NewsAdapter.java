@@ -26,9 +26,11 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ArticleViewHol
     }
 
     public void setNewsCursor(Cursor newsCursor){
-        mNewsData = newsCursor;
-        mNumberOfNewsArticles = mNewsData.getCount();
-        notifyDataSetChanged();
+        if(newsCursor != null){
+            mNewsData = newsCursor;
+            mNumberOfNewsArticles = mNewsData.getCount();
+            notifyDataSetChanged();
+        }
     }
 
     public interface NewsAdapterOnClickHandler{

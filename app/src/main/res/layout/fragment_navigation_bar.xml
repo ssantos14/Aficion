@@ -12,24 +12,28 @@
         android:layout_weight="1"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:background="@color/colorPrimary"/>
+        android:background="@color/colorPrimary"
+        android:contentDescription="TODO" />
     <ImageButton
         android:id="@+id/navigation_scores"
         android:layout_weight="1"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:background="@color/colorPrimary"/>
+        android:background="@color/colorPrimary"
+        android:contentDescription="TODO" />
     <ImageButton
         android:id="@+id/navigation_highlights"
         android:layout_weight="1"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:background="@color/colorPrimary"/>
+        android:background="@color/colorPrimary"
+        android:contentDescription="TODO" />
     <ImageButton
         android:id="@+id/navigation_following"
         android:layout_weight="1"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:background="@color/colorPrimary"/>
+        android:background="@color/colorPrimary"
+        android:contentDescription="TODO" />
 
 </LinearLayout>
