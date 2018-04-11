@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/stackWidgetItem"
     android:layout_height="wrap_content"
-    android:layout_width="@dimen/scores_recyclerview_column_width"
+    android:layout_width="wrap_content"
     android:padding="8dp"
     android:background="@android:color/white"
     android:orientation="vertical">
@@ -21,7 +21,7 @@
 
         <TextView
             android:id="@+id/team1_score_text_view"
-            android:layout_width="wrap_content"
+            android:layout_width="24dp"
             android:layout_height="wrap_content"
             android:textSize="22sp"
             android:textColor="@color/colorPrimaryDark"
@@ -42,7 +42,7 @@
 
         <TextView
             android:id="@+id/team2_score_text_view"
-            android:layout_width="wrap_content"
+            android:layout_width="24dp"
             android:layout_height="wrap_content"
             android:textSize="22sp"
             android:textColor="@color/colorPrimaryDark"

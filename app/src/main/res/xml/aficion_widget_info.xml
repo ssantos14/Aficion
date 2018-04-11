@@ -4,7 +4,7 @@
     android:initialKeyguardLayout="@layout/aficion_widget"
     android:initialLayout="@layout/aficion_widget"
     android:minHeight="220dp"
-    android:minWidth="220dp"
+    android:minWidth="320dp"
     android:previewImage="@drawable/ic_futbol"
     android:resizeMode="horizontal|vertical"
     android:updatePeriodMillis="86400000"
